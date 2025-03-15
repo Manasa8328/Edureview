@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ institution.name }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Styling for the body with a background image */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('{{ url_for("static", filename="image6.jpg") }}'); /* Update with your image filename */
+            background-size: cover;
+            background-position: center;
+            color: #0a0909;
+        }
+        
+        /* Styling for reviews and fake/real indicators */
+        .review {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: rgba(237, 231, 231, 0.5); /* Semi-transparent white */
+        }
+        .fake {
+            border-left: 5px solid red;
+        }
+        .real {
+            border-left: 5px solid green;
+        }
+        
+        /* Chart container */
+        #chart-container {
+            width: 25%; /* Adjust to your preference */
+            margin: auto;
+        }
+        
+        /* Back button styling */
+        button {
+            margin-top: 20px;
+        }
+        .voted {
+            color: blue;  /* Highlight voted buttons */
+        }
+
+        header {
+            background-color: rgba(239, 236, 236, 0.5);
+            padding: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>{{ institution.name }}</h1>
+        <p>Location: {{ institution.location }}</p>
+        <p>Description: {{ institution.description }}</p>
+    </header>
+
+    <main>
+        <h2>Top Reviews</h2>
+{% for review in reviews %}
+    <div class="review">
+        <p>{{ review.content }}</p>
+        <!--<p>Likes: {{ review.likes }} | Dislikes: {{ review.dislikes }}</p>-->
+    </div>
+{% endfor %}
+
+        {% for review in reviews %}
+            <div class="review {% if review.is_fake %}fake{% else %}real{% endif %}">
+                <p>{{ review.content }}</p>
+                <!--<p>Sentiment: {{ review.sentiment }}</p>-->
+                <p>Fake Review: {{ 'Yes' if review.is_fake else 'No' }}</p>
+                <p>Reviewed by: {{ review.user.username }}</p>
+
+                <!-- Voting buttons with visual indication -->
+                <form action="{{ url_for('upvote_review', review_id=review.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="{% if review.user_has_upvoted %}voted{% endif %}">
+                        <i class="fas fa-thumbs-up"></i> Like
+                    </button>
+                </form>
+                <form action="{{ url_for('downvote_review', review_id=review.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="{% if review.user_has_downvoted %}voted{% endif %}">
+                        <i class="fas fa-thumbs-down"></i> Dislike
+                    </button>
+                </form>
+
+                <!-- Only allow edit/delete for student users -->
+                {% if current_user.user_type == 'student' and review.user_id == current_user.id %}
+                <form action="{{ url_for('edit_review', review_id=review.id) }}" method="GET" style="display:inline;">
+                    <button type="submit">Edit</button>
+                </form>
+                <form action="{{ url_for('delete_review', review_id=review.id) }}" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+                {% endif %}
+            </div>
+        {% else %}
+            <p>No reviews yet. Be the first to review!</p>
+        {% endfor %}
+
+        <!-- Allow only student users to add reviews -->
+        {% if current_user.user_type == 'student' %}
+        <h2>Add a Review</h2>
+        <form action="{{ url_for('submit_review', institution_id=institution.id) }}" method="POST">
+            <textarea name="content" required></textarea>
+            <button type="submit">Submit Review</button>
+        </form>
+        {% endif %}
+        
+        <h2>Sentiment Distribution</h2>
+
+        <div id="chart-container">
+            <canvas id="sentimentChart" width="5" height="5"></canvas>
+        </div>
+
+        <!-- Back button to return to institutions list -->
+        <form action="{{ url_for('institutions') }}" method="GET">
+            <button type="submit">Back to Institutions</button>
+        </form>
+    </main>
+    
+
+    <!-- Sentiment chart rendering with Chart.js -->
+    <script>
+        const sentimentData = {
+            labels: ['Positive', 'Negative', 'Neutral'],
+            datasets: [{
+                label: 'Sentiment Distribution',
+                data: [{{ sentiment_percentages['Positive'] }}, {{ sentiment_percentages['Negative'] }}, {{ sentiment_percentages['Neutral'] }}],
+                backgroundColor: ['#36a2eb', '#ff6384', '#ffce56'],
+                hoverOffset: 2
+            }]
+        };
+
+        const config = {
+            type: 'pie',
+            data: sentimentData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Sentiment Distribution for {{ institution.name }}'
+                    }
+                }
+            },
+        };
+
+        const sentimentChart = new Chart(
+            document.getElementById('sentimentChart'),
+            config
+        );
+    </script>
+    <style>
+        #distance-form {
+            background: rgb(238, 230, 230);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #0a0404;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #101010;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #26236e;
+        }
+
+        p {
+            text-align: left;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        #distance-result, #transport-mode {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('distance-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const userLocation = document.getElementById('user-location').value;
+                const institutionLocation = document.getElementById('institution-location').value;
+
+                fetch('/calculate_distance', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_location: userLocation,
+                        institution_location: institutionLocation
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.distance) {
+                        document.getElementById('distance-result').innerText = `Distance: ${data.distance.toFixed(2)} km`;
+                        document.getElementById('transport-mode').innerText = `Suggested Mode of Transport: ${data.transport_mode}`;
+                    } else {
+                        document.getElementById('distance-result').innerText = 'Error calculating distance.';
+                        document.getElementById('transport-mode').innerText = '';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Calculate Distance and Transport Mode</h1>
+    <form id="distance-form">
+        <label for="user-location">Your Location:</label>
+        <input type="text" id="user-location" required>
+        <br>
+        <label for="institution-location">Institution Location:</label>
+        <input type="text" id="institution-location" required>
+        <br>
+        <button type="submit">Calculate Distance</button>
+    </form>
+    <p id="distance-result"></p>
+    <p id="transport-mode"></p>
+</body>
+</html>
+
+    
+</body>
+</html>

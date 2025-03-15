@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flagged Reviews</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Flagged Reviews</h1>
+    
+    <div class="container">
+        {% if reviews %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Review ID</th>
+                        <th>Institution</th>
+                        <th>Content</th>
+                        <th>Flags</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for review in reviews %}
+                    <tr>
+                        <td>{{ review.id }}</td>
+                        <td>{{ review.institution.name }}</td>
+                        <td>{{ review.content }}</td>
+                        <td>{{ review.flags }}</td>
+                        <td>
+                            <!-- Link to view the institution where the review was made -->
+                            <a href="{{ url_for('institution', id=review.institution_id) }}" class="btn">View Institution</a>
+                            <!-- Button to delete the flagged review -->
+                            <form action="{{ url_for('delete_review', review_id=review.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No flagged reviews at the moment.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

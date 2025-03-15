@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Reviews</title>
+    <style>
+        body {
+            background-image: url('{{ url_for("static", filename="photo7.jpg") }}');
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 80%;
+            max-width: 600px;
+            background-color: hsla(193, 55%, 66%, 0.706);
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        h2 {
+            color: #333;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .review {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .review h3 {
+            color: #090d0f;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .review p {
+            color: #7b3333;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Trending Reviews Across All Colleges</h2>
+        {% for review, institution_name in trending_reviews %}
+            <div class="review">
+                <h3>{{ institution_name }}</h3>
+                <p>{{ review.content }}</p>
+                <!--<p>Upvotes: {{ review.upvotes }}</p>-->
+                <!--<p>Posted on: {{ review.timestamp }}</p>-->
+            </div>
+        {% else %}
+            <p>No trending reviews at the moment.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

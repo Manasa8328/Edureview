@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entry Page - EduReview</title>
+    <style>
+        /* Background and layout styling */
+        body {
+            background-image: url('/static/photo3.jpg'); /* Update this with your image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        /* Centered content area with slight overlay */
+        .content {
+            position: relative;
+            background: rgba(228, 202, 202, 0.2); /* Transparent background for readability */
+            padding: 20px;
+            max-width: 800px;
+            width: 90%;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            color: #181b1d;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0a0b0c;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            background-color: #1e5c9b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Centered content box with entry information -->
+    <div class="content">
+        <h1>Welcome to EduReview</h1>
+        <p>Your platform for sharing and discovering real college experiences.</p>
+        <a href="/login" class="button">Login</a>
+        <a href="/register" class="button">Register</a>
+    </div>
+
+</body>
+</html>

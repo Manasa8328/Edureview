@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EduReview</title>
+    <style>
+        /* Background and layout styling */
+        body {
+            background-image: url('/static/image4.jpg'); /* Background image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        /* Centered content area with slight overlay */
+        .content {
+            position: relative;
+            background: rgba(209, 191, 191, 0.9); /* Slightly more opaque background for better readability */
+            padding: 30px;
+            max-width: 400px; /* Adjusted width for better form focus */
+            width: 90%;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #090a0a;
+            margin-bottom: 20px; /* Spacing below the heading */
+        }
+
+        label {
+            display: block;
+            margin-top: 15px; /* Spacing above each label */
+            text-align: left; /* Align labels to the left */
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%; /* Full width inputs */
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #040405;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1e5c9b;
+        }
+
+        footer {
+            margin-top: 20px; /* Spacing above footer */
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>EduReview Login</h1>
+        <form method="POST">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 EduReview</p>
+    </footer>
+</body>
+</html>

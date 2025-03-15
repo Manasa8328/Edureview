@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews</title>
+    <style>
+        .review, .reply {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .reply {
+            margin-left: 30px; /* Indent replies */
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Reviews</h2>
+    {% for review in reviews %}
+        <div class="review">
+            <p><strong>Review:</strong> {{ review.content }}</p>
+            <p><small>Posted on: {{ review.timestamp }}</small></p>
+
+            <!-- Display replies for this review -->
+            <div>
+                {% for reply in review.replies %}
+                    <div class="reply">
+                        <p>{{ reply.content }}</p>
+                        <p><small>Replied on: {{ reply.timestamp }}</small></p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Reply form for this review -->
+            <form action="{{ url_for('reviews', institution_id=institution_id) }}" method="POST">
+                <input type="hidden" name="review_id" value="{{ review.id }}">
+                <textarea name="reply_content" rows="2" placeholder="Add a reply..." required></textarea>
+                <button type="submit">Reply</button>
+            </form>
+        </div>
+    {% endfor %}
+
+</body>
+</html>

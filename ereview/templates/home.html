@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home - EduReview</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    background-image: url("C:\Users\DELL\OneDrive\Desktop\image.jpg");
+    background-size: cover; /* Ensures the image covers the entire page */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Avoids image repetition */
+    background-attachment: fixed;
+    <h1>Welcome to EduReview</h1>
+    <ul>
+        {% for institution in institutions %}
+        <li><a href="{{ url_for('institution', id=institution.id) }}">{{ institution.name }}</a> - {{ institution.location }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('login') }}">Login</a> | <a href="{{ url_for('register') }}">Register</a>
+</body>
+</html>

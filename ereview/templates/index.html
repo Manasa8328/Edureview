@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to EduReview{% endblock %}
+
+{% block content %}
+
+<h2>Welcome to EduReview</h2>
+<p>Your trusted platform for sharing reviews of educational institutions.</p>
+<div>
+    <a href="{{ url_for('login') }}"><button>Login</button></a>
+    <a href="{{ url_for('register') }}"><button>Register</button></a>
+</div>
+{% endblock %}

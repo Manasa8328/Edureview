@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institutions - EduReview</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Background and layout styling */
+        body {
+            background-image: url('/static/photo9.jpg'); /* Path to the background image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.3)
+        }
+
+        header {
+            background-color: rgba(243, 230, 230, 0.3); /* Semi-transparent header */
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #0d0d0d; /* Heading color */
+            margin: 0;
+            background-color: rgba(255, 255, 255, 0.3)
+        }
+
+        .logout-button {
+            color: #d9534f; /* Logout button color */
+            text-decoration: none;
+            float: right; /* Align to the right */
+            font-weight: bold;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px; /* Maximum width for main content */
+            margin: auto; /* Centering the main content */
+            background: rgba(243, 234, 234, 0.3); /* Slightly opaque background for main content */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Search bar styling */
+        .search-container {
+            text-align: center;
+            margin: 20px 0; /* Space above and below the search bar */
+            background-color: rgba(255, 255, 255, 0.3)
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.3) /* Button color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #070b0e; /* Button hover color */
+            background-color: rgba(255, 255, 255, 0.3)
+        }
+
+        ul {
+            list-style-type: none; /* Remove default list styles */
+            padding: 0;
+            background-color: rgba(255, 255, 255, 0.3)
+        }
+
+        li {
+            margin-bottom: 20px; /* Space between institutions */
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.3)
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .details-label {
+            color: #0a0c0e; /* Color for details link */
+            text-decoration: none;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.3)
+        }
+
+        .details-label:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+        .review-list li {
+    padding: 10px;
+    margin-bottom: 10px; /* Space between reviews */
+    background-color: rgba(232, 224, 224, 0.1); /* Background color for each review */
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    color: #333;
+    font-size: 14px;
+}
+.review-list li {
+    padding: 10px;
+    margin-bottom: 10px; /* Space between reviews */
+    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.3); /* Background color for each review */
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    color: #333;
+    font-size: 14px;
+}
+.review-content {
+    background-color: transparent; /* Transparent background for the review content */
+    color: #333; /* Text color for readability */
+    margin: 5px 0;
+    font-size: 14px;
+}
+.review-list button {
+    color: #d9534f;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.review-list button:hover i,
+.review-list button:hover span {
+    color: darkred;
+}
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent footer */
+            color: #666;
+            position: relative;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+            <h1>Welcome to the Educational Review Platform</h1>
+            <nav>
+                <a href="{{ url_for('about_us') }}" style="color: #2E86C1; text-decoration: none;">About Us</a> |
+                <a href="{{ url_for('services') }}" style="color: #C0392B; text-decoration: none;">Our Services</a>
+
+            </nav>
+    
+        <h1>Institutions</h1>
+        <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+    </header>
+
+    <main>
+        <!-- Search bar section -->
+        <div class="search-container">
+            <form action="{{ url_for('search_colleges') }}" method="GET">
+                <input type="text" name="query" placeholder="Search Colleges" required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        
+        <section>
+            <a href="{{ url_for('trending_reviews') }}">View Trending Reviews</a>
+            
+
+        </section>
+        
+        <ul>
+            {% if institutions %}
+                {% for institution in institutions %}
+                    <li>
+                        <h2>{{ institution.name }}</h2>
+                        <p><strong>Location:</strong> {{ institution.location }}</p>
+                        <p><strong>Description:</strong> {{ institution.description }}</p>
+                        <!--<p><strong>Average Rating:</strong> {{ institution.average_rating | round(2) if institution.average_rating else 'No ratings yet' }}</p>-->
+                        
+                        <!-- Details label -->
+                        <a href="{{ url_for('institution', id=institution.id) }}" class="details-label">Details</a>
+
+                        <!-- Display existing reviews -->
+                        <ul class="review-list">
+                            {% for review in institution.reviews %}
+                                <li>
+                                    {{ review.content }} - by {{ review.user.username }}
+                                    {% if review.user_id == current_user.id %}
+                                        <a href="{{ url_for('edit_review', review_id=review.id) }}">Edit</a>
+                                        <form action="{{ url_for('delete_review', review_id=review.id) }}" method="POST" style="display:inline;">
+                                            <button type="submit" onclick="return confirm('Are you sure you want to delete this review?');">Delete</button>
+                                        </form>
+                                    {% endif %}
+
+                                    <!-- New Flagging system for reviews -->
+                                    <p>Flags: {{ review.flags }}</p>
+                                    {% if not review.flagged_as_fake %}
+                                        <form action="{{ url_for('flag_review', review_id=review.id) }}" method="POST" style="display:inline;">
+                                            <button type="submit" style="background:none; border:none; cursor:pointer; display:flex; align-items:center;" title="Flag as Fake">
+                                                <i class="fas fa-flag" style="color:red; font-size:18px; margin-right:5px;"></i>
+                                                <span style="font-size:12px; color:red;">Flag as Fake</span>
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <p>This review has been flagged as potentially fake.</p>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        {% if not institution.user_has_reviewed %}
+                            <a href="{{ url_for('add_review', institution_id=institution.id) }}">Add Review</a>
+                        {% else %}
+                            <p>You have already submitted a review for this institution.</p>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            {% else %}
+                <p>No institutions found matching your search criteria.</p>
+            {% endif %}
+        </ul>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 EduReview</p>
+    </footer>
+</body>
+</html>

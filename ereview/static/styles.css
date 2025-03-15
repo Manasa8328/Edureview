@@ -1,0 +1,158 @@
+/* styles.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font for better readability */
+    background-color: #f0f8ff; /* Light blue background */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #0f120f; /* Green header */
+    color: white;
+    padding: 20px 0; /* Increased padding for a taller header */
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    margin: 0; /* Remove default margin */
+    font-size: 2.5em; /* Larger font size for the header */
+}
+
+header nav {
+    display: flex;
+    justify-content: center; /* Center nav items */
+    flex-wrap: wrap; /* Wrap items on smaller screens */
+}
+
+header nav a {
+    color: white;
+    margin: 0 20px; /* Increased margin for better spacing */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    padding: 10px 15px; /* Added padding for better click area */
+    border-radius: 5px; /* Rounded corners */
+}
+
+header nav a:hover {
+    background-color: #ffeb3b; /* Change background color on hover */
+    color: #333; /* Dark text color on hover */
+}
+
+main {
+    margin: 30px auto; /* Added top margin for better spacing from header */
+    max-width: 800px;
+    background: white;
+    padding: 30px; /* Increased padding for content */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h2 {
+    color: #333;
+    font-size: 2em; /* Increased font size for headings */
+    margin-bottom: 15px; /* Added bottom margin for spacing */
+}
+
+h3 {
+    color: #555; /* Style for subheadings */
+    font-size: 1.5em;
+    margin-bottom: 10px; /* Added bottom margin for spacing */
+}
+
+a {
+    color: #111211;
+    text-decoration: none;
+    font-weight: bold; /* Bold links */
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    background-color: #0f100f;
+    color: white;
+    border: none;
+    padding: 12px 25px; /* Increased padding for buttons */
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #060606; /* Darker shade on hover */
+}
+
+.institution {
+    border: 1px solid #ddd;
+    border-radius: 8px; /* More rounded corners */
+    padding: 20px; /* Increased padding for better spacing */
+    margin: 15px 0; /* Added margin for spacing */
+    transition: transform 0.3s, box-shadow 0.3s; /* Transition for hover effects */
+    background-color: #ffffff; /* White background for institutions */
+}
+
+.institution:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.review-list {
+    background-color:transparent;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px; /* Increased bottom margin */
+    list-style: none;
+}
+
+.review-list li {
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0; /* Increased padding for reviews */
+}
+
+.review-list li:last-child {
+    border-bottom: none; /* Remove border for last item */
+}
+
+footer {
+    text-align: center;
+    padding: 20px; /* Increased padding for footer */
+    background-color: #151915;
+    color: white;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    header nav {
+        flex-direction: column; /* Stack nav items vertically on smaller screens */
+    }
+
+    header nav a {
+        margin: 5px 0; /* Adjust margin for stacked items */
+    }
+
+    main {
+        padding: 20px; /* Reduced padding for smaller screens */
+    }
+
+    h2 {
+        font-size: 1.8em; /* Adjust font size for headings on smaller screens */
+    }
+
+    h3 {
+        font-size: 1.3em; /* Adjust font size for subheadings on smaller screens */
+    }
+
+    button {
+        padding: 10px 20px; /* Adjust padding for buttons on smaller screens */
+    }
+}
